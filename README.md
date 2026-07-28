@@ -1,4 +1,27 @@
-# ICO Template
+<p align="center">
+  <a href="https://redduck.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/redduck-logo-dark.svg">
+      <img src=".github/assets/redduck-logo.svg" alt="RedDuck" width="240">
+    </picture>
+  </a>
+</p>
+
+<h1 align="center">ICO Template</h1>
+
+<p align="center">
+  <b>A token sale in Solidity — whitelisting, oracle pricing and vesting, built to be read.</b>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+  <img alt="Solidity" src="https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity&logoColor=white">
+  <img alt="Hardhat" src="https://img.shields.io/badge/Hardhat-compatible-FFF04D?logo=hardhat&logoColor=black">
+  <img alt="OpenZeppelin" src="https://img.shields.io/badge/OpenZeppelin-Contracts-4E5EE4">
+  <img alt="Chainlink" src="https://img.shields.io/badge/Chainlink-oracles-375BD2?logo=chainlink&logoColor=white">
+</p>
+
+---
 
 An educational Solidity + Hardhat template for an **ICO (Initial Coin Offering)** — a token sale built from the mechanisms real sales actually use: buyer whitelisting, oracle-priced multi-asset payments (including a Uniswap V3 TWAP), and vesting with a Token Generation Event (TGE).
 
@@ -85,6 +108,8 @@ claimable   = unlocked(t) − alreadyClaimed
 
 where `cliffEnd = tgeDate + cliffDuration` and `D = vestingDuration`. `tgeAmount` (e.g. 10% of the purchase) is claimable as soon as the owner runs `executeTGE()` on or after the TGE date; the rest vests linearly once the cliff ends. This is what stops every buyer from dumping their full allocation the moment the sale ends.
 
+> Vesting here is deliberately built into the sale: positions are created by `buyWithETH()` / `buyWithERC20()`, so there is no separate allocation list to maintain. If you need vesting *without* a sale — an airdrop or a pre-agreed allocation table — our [**Vesting templates**](https://github.com/RedDuckTeam/Vesting) cover that case, with three ways to authorize a claim (on-chain mapping, Merkle proof, or an owner signature) and a gas comparison between them.
+
 ## Getting started
 
 ```bash
@@ -133,7 +158,7 @@ It deploys its own Token/Whitelist/ICO plus a mock payment token and Chainlink a
 
 ## Design notes & trade-offs
 
-- **Whitelist vs Merkle proofs.** This template uses a simple `mapping(address => bool)` registry — easy to read and to inspect on-chain, but each addition costs a transaction (mitigated here with a batch-add function). For a buyer list in the tens of thousands, storing a single Merkle root and having buyers submit a proof with their purchase is far cheaper per-buyer, at the cost of the registry being less directly inspectable.
+- **Whitelist vs Merkle proofs.** This template uses a simple `mapping(address => bool)` registry — easy to read and to inspect on-chain, but each addition costs a transaction (mitigated here with a batch-add function). For a buyer list in the tens of thousands, storing a single Merkle root and having buyers submit a proof with their purchase is far cheaper per-buyer, at the cost of the registry being less directly inspectable. The same trade-off, applied to token claims rather than to the buyer list, is worked through in [`MerkleVesting`](https://github.com/RedDuckTeam/Vesting) — including what it costs in gas next to a plain on-chain mapping.
 - **Why an oracle interface instead of calling Chainlink directly.** Decoupling `ICO.sol` from any specific price source is what makes `SecuredPriceOracle` possible without touching the sale contract at all — it's just another address that answers `getPrice()`.
 - **Oracle safety.** `ChainlinkPriceOracle` rejects non-positive prices, unanswered rounds, and answers older than `maxStaleness`. Tune the staleness bound per feed — each Chainlink feed has its own heartbeat.
 - **Custom errors over require strings.** Cheaper in gas and precise to test against.
@@ -149,4 +174,4 @@ Reading the tests top-to-bottom is a good way to learn how the pieces fit togeth
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © RedDuck Limited
