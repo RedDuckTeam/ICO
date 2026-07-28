@@ -13,17 +13,19 @@
   <b>A token sale in Solidity — whitelisting, oracle pricing and vesting, built to be read.</b>
 </p>
 
-<p align="center">
-  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Solidity" src="https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity&logoColor=white">
-  <img alt="Hardhat" src="https://img.shields.io/badge/Hardhat-compatible-FFF04D?logo=hardhat&logoColor=black">
-  <img alt="OpenZeppelin" src="https://img.shields.io/badge/OpenZeppelin-Contracts-4E5EE4">
-  <img alt="Chainlink" src="https://img.shields.io/badge/Chainlink-oracles-375BD2?logo=chainlink&logoColor=white">
-</p>
-
 ---
 
 An educational Solidity + Hardhat template for an **ICO (Initial Coin Offering)** — a token sale built from the mechanisms real sales actually use: buyer whitelisting, oracle-priced multi-asset payments (including a Uniswap V3 TWAP), and vesting with a Token Generation Event (TGE).
+
+## Built with
+
+| Area | Technology |
+| --- | --- |
+| Contracts | Solidity 0.8.28, [OpenZeppelin Contracts](https://www.openzeppelin.com/contracts) |
+| Price oracles | Chainlink price feeds, Uniswap V3 TWAP |
+| Tooling | [Hardhat](https://hardhat.org/), `@nomicfoundation/hardhat-toolbox-viem`, [Viem](https://viem.sh/), TypeScript |
+| Testing | Hardhat + Chai — fixture-based unit tests plus a live-node smoke test |
+| Config | `dotenv`, `ts-node` |
 
 ## The mechanisms, and why each exists
 
