@@ -15,7 +15,7 @@
 
 ---
 
-An educational Solidity + Hardhat template for an **ICO (Initial Coin Offering)** — a token sale built from the mechanisms real sales actually use: buyer whitelisting, oracle-priced multi-asset payments (including a Uniswap V3 TWAP), and vesting with a Token Generation Event (TGE).
+A Solidity + Hardhat template for an **ICO (Initial Coin Offering)** — a token sale built from the mechanisms real sales actually use: buyer whitelisting, oracle-priced multi-asset payments (including a Uniswap V3 TWAP), and vesting with a Token Generation Event (TGE).
 
 ## Built with
 
